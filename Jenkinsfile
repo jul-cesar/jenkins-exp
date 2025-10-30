@@ -1,26 +1,20 @@
 pipeline {
   agent any
-  options { timestamps(); ansiColor('xterm') }
+  options { timestamps() }   // <- quitamos ansiColor
 
-  // Asegúrate en "Global Tool Configuration" de tener un Maven llamado "Maven 3" con Install automatically
   tools { maven 'Maven 3' }
 
   stages {
     stage('Checkout') {
       steps { checkout scm }
     }
-
     stage('Build') {
       steps { sh 'mvn -B -DskipTests clean package' }
     }
-
     stage('Test') {
       steps { sh 'mvn -B test' }
-      post {
-        always { junit '**/target/surefire-reports/*.xml' }
-      }
+      post { always { junit '**/target/surefire-reports/*.xml' } }
     }
-
     stage('Archive') {
       steps { archiveArtifacts artifacts: 'target/*.jar', fingerprint: true }
     }
