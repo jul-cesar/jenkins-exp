@@ -2,7 +2,7 @@ package com.example;
 
 public class App {
     public static String message() {
-        return "Hello CI/CD";
+        return "Hola CI/CD";
     }
 
     public static void main(String[] args) {
